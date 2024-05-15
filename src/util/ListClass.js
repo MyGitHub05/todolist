@@ -1,7 +1,9 @@
 export class List {
   #thingsTodo;
-  constructor() {
+  #title;
+  constructor(title) {
     this.#thingsTodo = [];
+    this.#title = title;
   }
   add(list) {
     this.#thingsTodo.push(list);
@@ -15,6 +17,9 @@ export class List {
   get thingsTodo() {
     return this.#thingsTodo;
   }
+  get title() {
+    return this.#title;
+  }
 }
 
-export const listOfTodo = new List();
+export const listOfTodo = new List("mainlist");

@@ -1,4 +1,4 @@
-import { listOfTodo } from "../util/ListClass";
+import { listOfTodo, List } from "../util/ListClass";
 export class UI {
   constructor() {
     // Declare ListInput as a property of the class
@@ -23,7 +23,7 @@ export class UI {
     const add = document.querySelector(".addBtn");
     add.addEventListener("click", () => {
       let valueOfInput = this.ListInput.value;
-      listOfTodo.add(valueOfInput);
+      listOfTodo.add(new List(valueOfInput));
       this.renderList(listOfTodo.thingsTodo);
       this.ListInput.value = "";
       this.div.remove();
@@ -37,7 +37,7 @@ export class UI {
       const divEachList = document.createElement("div");
       divEachList.classList = "divEacList";
       const nameOfList = document.createElement("h1");
-      nameOfList.textContent = e;
+      nameOfList.textContent = e.title;
       divEachList.appendChild(nameOfList);
       ListDiv.appendChild(divEachList);
     });
