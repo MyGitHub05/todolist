@@ -13,12 +13,11 @@
   margin-bottom: 30px;
 }
 
-.listOfNav {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  width: 150px;
+.navBtn {
+  background-color: white;
+  border: none;
+  height: 100%;
+  min-width: 150px;
   font-size: 20px;
   font-weight: bolder;
   cursor: pointer;

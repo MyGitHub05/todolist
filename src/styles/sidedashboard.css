@@ -26,6 +26,7 @@
   margin-left: 10px;
 }
 .addCategoriesDiv {
+  border: 1px solid red;
   display: flex;
   flex-direction: column;
   margin-bottom: 10px;
@@ -74,16 +75,18 @@
   cursor: pointer;
 }
 
-#list {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
+.trashbinBtn {
+  height: 25px;
+  width: 25px;
+  overflow: hidden;
+  cursor: pointer;
 }
-
-.divEacList {
+.trashbinBtn img {
+  margin-top: 2px;
+  height: 20px;
+}
+.addCategoriesDiv .categoriesDiv div h1 {
   display: flex;
-  margin-top: 10px;
-  height: 300px;
-  padding: 5px;
-  overflow: auto;
+  align-items: center;
+  justify-content: space-between;
 }

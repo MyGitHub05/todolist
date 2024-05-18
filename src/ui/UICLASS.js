@@ -6,24 +6,71 @@ export class UI {
     this.div = null;
   }
   addNewCategoryForm() {
-    const categoryForm = document.createElement("form");
-    categoryForm.innerHTML = `
+    const categoryFormDiv = document.createElement("div");
+    categoryFormDiv.innerHTML = `
        <form id="newCategoryForm" action="category-form">
         <input type="text" name="categoryTitle" id="categoryTitle" />
         <button type="submit" class="submitCategoryBtn">Add</button>
       </form>
     `;
-    return categoryForm;
+    return categoryFormDiv;
   }
-  saveCategory(category) {
-    localStorage.setItem("category", JSON.stringify(category));
+  saveCategory(categoryName) {
+    const categories = JSON.parse(localStorage.getItem("categories")) || [];
+    categories.push(categoryName);
+    localStorage.setItem("categories", JSON.stringify(categories));
   }
   loadCategory() {
-    const category = JSON.parse(localStorage.getItem("category")) || [];
-    return category;
+    const categories = JSON.parse(localStorage.getItem("categories")) || [];
+    return categories;
   }
-  renderCategory(){
-    
+  deleteCategory(categoryName) {
+    const categories = JSON.parse(localStorage.getItem("categories")) || [];
+    const updatedCategories = categories.filter(
+      (category) => category !== categoryName
+    );
+    localStorage.setItem("categories", JSON.stringify(updatedCategories));
+  }
+  renderCategory() {
+    const categories = this.loadCategory();
+    const categoriesDiv = document.createElement("div");
+    categoriesDiv.className = "categoriesDiv";
+
+    categories.forEach((element) => {
+      const div = document.createElement("div");
+      const categoryName = document.createElement("h1");
+      const deleteCategoryBtn = document.createElement("button");
+      const trashCanImg = document.createElement("img");
+      trashCanImg.src = "./images/trashbin.png";
+
+      deleteCategoryBtn.classList.add("trashbinBtn");
+
+      categoryName.textContent = element;
+
+      deleteCategoryBtn.addEventListener("click", () => {
+        this.deleteCategory(element);
+        window.location.reload();
+      });
+
+      deleteCategoryBtn.appendChild(trashCanImg);
+      div.appendChild(categoryName);
+      categoryName.appendChild(deleteCategoryBtn);
+      categoriesDiv.appendChild(div);
+    });
+    return categoriesDiv;
+  }
+
+  renderNav() {
+    const listNavigation = document.createElement("nav");
+    listNavigation.id = "listNavigation";
+    let categories = this.loadCategory();
+    categories.forEach((category) => {
+      const navBtn = document.createElement("button");
+      navBtn.classList.add("navBtn");
+      navBtn.textContent = category;
+      listNavigation.appendChild(navBtn);
+    });
+    return listNavigation;
   }
   // addNewCategory() {
   //   const addNewListDiv = document.querySelector(".addlistDiv");
