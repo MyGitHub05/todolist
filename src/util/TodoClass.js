@@ -6,9 +6,9 @@ export class Todo {
   #notes;
   #checklist;
 
-  constructor(todo, description, dueDate, priority) {
+  constructor(todo, dueDate, priority) {
     this.#todo = todo;
-    this.#description = description;
+    this.#description = "";
     this.#dueDate = dueDate;
     this.#priority = priority;
     this.#notes = "";

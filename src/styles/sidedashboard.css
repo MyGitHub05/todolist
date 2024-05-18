@@ -25,17 +25,17 @@
   font-size: 20px;
   margin-left: 10px;
 }
-.addlistDiv {
+.addCategoriesDiv {
   display: flex;
   flex-direction: column;
   margin-bottom: 10px;
 }
-.addlistDiv div {
+.addCategoriesDiv form {
   display: flex;
   align-items: center;
-  margin-top: 5px;
+  margin-top: 10px;
 }
-.addlistDiv div input {
+.addCategoriesDiv form input {
   height: 30px;
   font-size: 16px;
   margin-left: 10px;
@@ -44,7 +44,7 @@
   width: 100%;
 }
 
-.addListBtn {
+.addCatergoriesBtn {
   height: 30px;
   width: 30px;
   background-color: green;
@@ -56,12 +56,13 @@
   border: none;
 }
 
-.addlistDiv label {
+.addCategoriesDiv label {
   font-size: 16px;
   margin-left: 10px;
 }
 
-.addBtn {
+.submitCategoryBtn {
+  margin-left: 10px;
   height: 30px;
   width: 50px;
   border-radius: 2px;
