@@ -5,8 +5,14 @@ import "./images/userProfile.jpg";
 import "./images/menu.png";
 import "./images/trashbin.png";
 import { UI } from "./ui/UICLASS";
+import { CategoriesController } from "./util/controller";
+import {
+  deleteTodoList,
+  makeAnArraySaveInLocalStorage,
+} from "./util/deleteInLocalStorage";
 
 document.addEventListener("DOMContentLoaded", () => {
+  const controller = CategoriesController();
   const ui = new UI();
   const addNewCategoriesDiv = document.querySelector(".addCategoriesDiv");
   const formDiv = document.querySelector(".formDiv");
@@ -36,13 +42,16 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!categoryName) {
         alert("mag lagay ka naman");
       } else {
-        ui.saveCategory(categoryName);
+        controller.saveCategory(categoryName);
+        makeAnArraySaveInLocalStorage(); //everytime we click submit button categoryForm it will automatic make it an array of the new category
       }
       forAllCategoriesDiv.innerHTML = ""; // for not doubling the rendering of category
       forAllCategoriesDiv.appendChild(ui.renderCategory()); //rendered category
+      window.location.reload(); // reload window to render the category
     });
   });
 
   addNewCategoriesDiv.appendChild(ui.renderCategory()); // rendered category
-  content.insertBefore(ui.renderNav(), mainContent);
+  content.insertBefore(ui.renderNav(), mainContent); // render nav before main content
+  makeAnArraySaveInLocalStorage(); // make array if the website is load
 });

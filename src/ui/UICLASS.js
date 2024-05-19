@@ -1,10 +1,6 @@
-import { listOfTodo, List } from "../util/ListClass";
+import { CategoriesController } from "../util/controller";
+const controller = CategoriesController();
 export class UI {
-  constructor() {
-    // Declare ListInput as a property of the class
-    this.ListInput = document.createElement("input");
-    this.div = null;
-  }
   addNewCategoryForm() {
     const categoryFormDiv = document.createElement("div");
     categoryFormDiv.innerHTML = `
@@ -15,24 +11,8 @@ export class UI {
     `;
     return categoryFormDiv;
   }
-  saveCategory(categoryName) {
-    const categories = JSON.parse(localStorage.getItem("categories")) || [];
-    categories.push(categoryName);
-    localStorage.setItem("categories", JSON.stringify(categories));
-  }
-  loadCategory() {
-    const categories = JSON.parse(localStorage.getItem("categories")) || [];
-    return categories;
-  }
-  deleteCategory(categoryName) {
-    const categories = JSON.parse(localStorage.getItem("categories")) || [];
-    const updatedCategories = categories.filter(
-      (category) => category !== categoryName
-    );
-    localStorage.setItem("categories", JSON.stringify(updatedCategories));
-  }
   renderCategory() {
-    const categories = this.loadCategory();
+    const categories = controller.loadCategory();
     const categoriesDiv = document.createElement("div");
     categoriesDiv.className = "categoriesDiv";
 
@@ -48,7 +28,7 @@ export class UI {
       categoryName.textContent = element;
 
       deleteCategoryBtn.addEventListener("click", () => {
-        this.deleteCategory(element);
+        controller.deleteCategory(element);
         window.location.reload();
       });
 
@@ -63,7 +43,7 @@ export class UI {
   renderNav() {
     const listNavigation = document.createElement("nav");
     listNavigation.id = "listNavigation";
-    let categories = this.loadCategory();
+    let categories = controller.loadCategory();
     categories.forEach((category) => {
       const navBtn = document.createElement("button");
       navBtn.classList.add("navBtn");
