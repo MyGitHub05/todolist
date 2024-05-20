@@ -11,6 +11,7 @@ import {
   makeAnArraySaveInLocalStorage,
 } from "./util/deleteInLocalStorage";
 
+// DOMContentLoaded to ensure the DOM is fully loaded before executing the script
 document.addEventListener("DOMContentLoaded", () => {
   const controller = CategoriesController();
   const ui = new UI();
@@ -24,6 +25,8 @@ document.addEventListener("DOMContentLoaded", () => {
   //this is the green button in sidedashboard
   addCategoriesBtn.addEventListener("click", (event) => {
     event.preventDefault();
+
+    //sideboard form
     formDiv.innerHTML = "";
 
     //this is the form that will pop out when you click the addCategoriesBtn
@@ -54,4 +57,5 @@ document.addEventListener("DOMContentLoaded", () => {
   addNewCategoriesDiv.appendChild(ui.renderCategory()); // rendered category
   content.insertBefore(ui.renderNav(), mainContent); // render nav before main content
   makeAnArraySaveInLocalStorage(); // make array if the website is load
+  ui.renderTodoList();
 });

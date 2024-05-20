@@ -1,4 +1,5 @@
 import { CategoriesController } from "../util/controller";
+import { getArrayFromLocalStorage } from "../util/deleteInLocalStorage";
 const controller = CategoriesController();
 export class UI {
   addNewCategoryForm() {
@@ -41,106 +42,111 @@ export class UI {
   }
 
   renderNav() {
+    // Create a <nav> element and set its ID
     const listNavigation = document.createElement("nav");
     listNavigation.id = "listNavigation";
+
+    // Load categories from the controller
     let categories = controller.loadCategory();
-    categories.forEach((category) => {
-      const navBtn = document.createElement("button");
-      navBtn.classList.add("navBtn");
-      navBtn.textContent = category;
-      listNavigation.appendChild(navBtn);
-    });
+
+    // Check if categories is an array
+    if (Array.isArray(categories)) {
+      // Iterate through each category and create a button for it
+      categories.forEach((category) => {
+        const navBtn = document.createElement("button");
+        navBtn.classList.add("navBtn");
+        navBtn.id = category;
+        navBtn.textContent = category;
+
+        //add Click function in nav
+        navBtn.addEventListener("click", () => {
+          //this.renderTodoForm();
+          this.renderTodoList(getArrayFromLocalStorage(category));
+        });
+
+        listNavigation.appendChild(navBtn);
+      });
+    } else {
+      console.error("Categories should be an array");
+    }
+
+    // Return the constructed navigation element
     return listNavigation;
   }
-  // addNewCategory() {
-  //   const addNewListDiv = document.querySelector(".addlistDiv");
-  //   if (
-  //     !addNewListDiv.querySelector("input") &&
-  //     !addNewListDiv.querySelector(".addBtn")
-  //   ) {
-  //     this.div = document.createElement("div");
-  //     const addBtn = document.createElement("button");
-  //     addBtn.className = "addBtn";
-  //     addBtn.textContent = "Add";
 
-  //     this.div.appendChild(addBtn);
-  //     this.div.appendChild(this.ListInput);
-  //     addNewListDiv.appendChild(this.div);
-  //   }
-  //   const add = document.querySelector(".addBtn");
-  //   add.addEventListener("click", () => {
-  //     let valueOfInput = this.ListInput.value;
-  //     listOfTodo.add(new List(valueOfInput));
-  //     this.renderList(listOfTodo.thingsTodo);
-  //     this.renderNav(listOfTodo.thingsTodo);
-  //     this.renderForm();
-  //     this.ListInput.value = "";
-  //     this.div.remove();
-  //   });
-  // }
+  renderTodoForm(category) {
+    const todolistFormDiv = document.getElementById("todolistFormDiv");
+    todolistFormDiv.innerHTML = "";
+    const form = `
+      <form action="todoList-form" id="todoListForm">
+            <div>
+              <label for="todo">Todo</label>
+              <input type="text" name="todo" id="todo" />
+            </div>
 
-  // renderNav(list) {
-  //   const nav = document.getElementById("listNavigation");
-  //   nav.innerHTML = "";
+            <div>
+              <label for="dateTime">Date & Time </label>
+              <input type="datetime-local" name="dateTime" id="dateTime" />
+            </div>
 
-  //   list.forEach((e) => {
-  //     const li = document.createElement("li");
-  //     li.classList = "listOfNav";
-  //     li.textContent = e.title;
-  //     nav.appendChild(li);
-  //   });
-  // }
-  // renderForm() {
-  //   const content = document.getElementById("content");
-  //   const form = document.createElement("form");
-  //   form.innerHTML = `
-  //     <form action="task-form">
-  //       <div>
-  //         <label for="title">To do</label>
-  //         <input type="text" name="title" id="title" />
-  //       </div>
+            <div>
+              <label for="priority">Priority</label>
+              <select id="priority">
+                <option value="low">low</option>
+                <option value="high">high</option>
+              </select>
+            </div>
 
-  //       <div>
-  //         <label for="duedate">Duedate</label>
-  //         <input type="datetime-local" name="duedate" id="duedate" />
-  //       </div>
+            <div>
+              <button type="submit" id="todoSubmitBtn">add</button>
+            </div>
+          </form>
+    `;
 
-  //       <div>
-  //         <label for="priority">Priority</label>
-  //         <select id="priority">
-  //           <option value="low">low</option>
-  //           <option value="high">high</option>
-  //         </select>
-  //       </div>
-  //     </form>
-  //   `;
-  //   content.appendChild(form);
-  // }
+    todolistFormDiv.innerHTML = form;
 
-  // renderList(list) {
-  //   const ListDiv = document.getElementById("list");
-  //   ListDiv.innerHTML = "";
-  //   list.forEach((e) => {
-  //     const divEachList = document.createElement("div");
-  //     divEachList.classList = "divEacList";
-  //     const nameOfList = document.createElement("h1");
-  //     nameOfList.textContent = e.title;
-  //     divEachList.appendChild(nameOfList);
-  //     ListDiv.appendChild(divEachList);
-  //   });
-  // }
+    // Add event listener to handle form submission
+    document
+      .getElementById("todoListForm")
+      .addEventListener("submit", (event) => {
+        event.preventDefault();
+        this.saveTodoInLocalStorage(category);
+      });
+  }
 
-  // renderTodo() {
-  //   const mainContent = document.getElementById("mainContent");
-  //   mainContent.innerHTML = "";
-  //   mainContent.innerHTML = `
-  //     <ul>
-  //         <li>
-  //           <span>dish washing</span> <span>09/15/2000 2:00pm</span
-  //           ><span>low</span>
-  //           <button><img src="./images/menu.png" alt="menu" /></button>
-  //         </li>
-  //       </ul>
-  //   `;
-  // }
+  renderTodoList(category) {
+    const ul = document.getElementById("todoList");
+    category.forEach((todo) => {
+      const li = document.createElement("li");
+      li.innerHTML = `
+      <li>
+            <div class="todoInfoDiv">
+              <p>Title: <span>Dish washing</span></p>
+              <p>Date&Time: <span>5/20/2024 11:36am</span></p>
+              <p>Priority: <span>low</span></p>
+              <div>
+                <button class="TodoBtns edit">edit</button>
+                <button class="TodoBtns delete">Delete</button>
+              </div>
+            </div>
+            <div>
+              <p class="metadata">Description:</p>
+              <p>
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quidem
+                modi facere quam soluta nisi. Dolorem nesciunt iste suscipit sed
+                vitae eum fuga ipsam ea! Doloremque minus totam ad natus esse!
+              </p>
+              <p class="metadata">Notes:</p>
+              <p>
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Earum
+                non animi debitis officia tempore quasi sapiente, nulla autem
+                quidem ex tempora velit veritatis aliquid incidunt repudiandae
+                hic iste similique porro!
+              </p>
+            </div>
+          </li>
+    `;
+      ul.appendChild(li);
+    });
+  }
 }

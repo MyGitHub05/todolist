@@ -18,3 +18,17 @@ export function CategoriesController() {
 
   return { saveCategory, loadCategory, loadCategory, deleteCategory };
 }
+
+export function TodoListController() {
+  const saveTodoListInThereArray = () => {
+    const todo = document.getElementById("todo").value.trim();
+    const dateTime = document.getElementById("dateTime").value;
+    const priority = document.getElementById("priority").value;
+
+    if (todo && dateTime && priority) {
+      const todo = {};
+    }
+  };
+
+  return { saveTodoListInThereArray };
+}
