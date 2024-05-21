@@ -5,20 +5,14 @@ import "./images/userProfile.jpg";
 import "./images/menu.png";
 import "./images/trashbin.png";
 import { UI } from "./ui/UICLASS";
-import { CategoriesController } from "./util/controller";
-import {
-  deleteTodoList,
-  makeAnArraySaveInLocalStorage,
-} from "./util/deleteInLocalStorage";
+import { localStorageController } from "./util/localStorageController";
 
 // DOMContentLoaded to ensure the DOM is fully loaded before executing the script
 document.addEventListener("DOMContentLoaded", () => {
-  const controller = CategoriesController();
-  const ui = new UI();
-  const addNewCategoriesDiv = document.querySelector(".addCategoriesDiv");
+  const ui = UI();
+  const LSController = localStorageController();
   const formDiv = document.querySelector(".formDiv");
   const addCategoriesBtn = document.querySelector(".addCatergoriesBtn");
-  const forAllCategoriesDiv = document.querySelector(".forAllCategories");
   const content = document.getElementById("content");
   const mainContent = document.getElementById("mainContent");
 
@@ -36,26 +30,22 @@ document.addEventListener("DOMContentLoaded", () => {
     // getting the value of the category form and save it to localStorage
     newCategoryForm.addEventListener("submit", (event) => {
       event.preventDefault();
-      const categoryName = newCategoryForm
-        .querySelector("#categoryTitle")
-        .value.trim(); //we use trim to avoid passing a space in out categories
+      let categoryNameInput = newCategoryForm.querySelector("#categoryTitle");
+      let categoryName = categoryNameInput.value.trim(); //we use trim to avoid passing a space in out categories
 
-      // if the value of categoryName is equal to empty string it will alert the user to "mag lagay ka naman"
-      // else it will save the data to localStorage
       if (!categoryName) {
-        alert("mag lagay ka naman");
-      } else {
-        controller.saveCategory(categoryName);
-        makeAnArraySaveInLocalStorage(); //everytime we click submit button categoryForm it will automatic make it an array of the new category
+        console.warn("Category name cannot be empty.");
+        return;
       }
-      forAllCategoriesDiv.innerHTML = ""; // for not doubling the rendering of category
-      forAllCategoriesDiv.appendChild(ui.renderCategory()); //rendered category
-      window.location.reload(); // reload window to render the category
+
+      const value = []; // Initialize the category with an empty array; //we make it an array and save it to localStorage
+      LSController.saveToLocalStorage(categoryName, value);
+      categoryNameInput.value = "";
+      ui.renderCategory();
+      ui.renderNav();
     });
   });
 
-  addNewCategoriesDiv.appendChild(ui.renderCategory()); // rendered category
-  content.insertBefore(ui.renderNav(), mainContent); // render nav before main content
-  makeAnArraySaveInLocalStorage(); // make array if the website is load
-  ui.renderTodoList();
+  ui.renderCategory(); // rendered category
+  ui.renderNav(); // render nav before main content
 });
