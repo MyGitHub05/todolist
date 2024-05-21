@@ -1,3 +1,3 @@
-export function deleteInLocalStorage(category) {
-  localStorage.removeItem(category);
+export function deleteInLocalStorage(key) {
+  localStorage.removeItem(key);
 }

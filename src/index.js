@@ -48,4 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   ui.renderCategory(); // rendered category
   ui.renderNav(); // render nav before main content
+
+  ui.renderTodoForm("todays");
+  ui.renderTodoList("todays");
 });

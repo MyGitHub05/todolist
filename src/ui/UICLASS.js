@@ -35,7 +35,9 @@ export function UI() {
       categoryName.textContent = key;
 
       deleteCategoryBtn.addEventListener("click", () => {
-        console.log("working");
+        lSControllers.deleteInLocalStorage(key);
+        renderCategory();
+        renderNav();
       });
 
       deleteCategoryBtn.appendChild(trashCanImg);
@@ -63,10 +65,9 @@ export function UI() {
 
       //add Click function in nav
       navBtn.addEventListener("click", () => {
+        renderTodoForm(key);
+        renderTodoList(key);
         console.log("renderNav working");
-        // const key = `category_${category}`;
-        // this.renderTodoForm(key);
-        // this.renderTodoList(key);
       });
 
       listNavigation.appendChild(navBtn);
@@ -119,15 +120,54 @@ export function UI() {
             dateTime: dateTime,
             priority: priority,
           };
-          Todocontroller.saveTodoListInTheirArray(key, todoItem);
+          const todoArray = lSControllers.getToLocalStorage(key);
+          todoArray.push(todoItem);
+          lSControllers.saveToLocalStorage(key, todoArray);
         } else {
           console.warn(`you need to put some data`);
         }
-        this.renderTodoList(key);
+        // this.renderTodoList(key);
       });
   };
 
-  const renderTodoList = (key) => {};
+  const renderTodoList = (key) => {
+    const ul = document.getElementById("todoList");
+    ul.innerHTML = "";
+    const todoList = lSControllers.getToLocalStorage(key);
+    todoList.forEach((todo) => {
+      console.log(todo.todo);
+      const li = document.createElement("li");
+      li.innerHTML = `
+      <li>
+            <div class="todoInfoDiv">
+              <p>Title: <span>${todo.todo}</span></p>
+              <p>Date&Time: <span>${todo.dateTime}</span></p>
+              <p>Priority: <span>${todo.priority}</span></p>
+              <div>
+                <button class="TodoBtns edit">edit</button>
+                <button class="TodoBtns delete">Delete</button>
+              </div>
+            </div>
+            <div>
+              <p class="metadata">Description:</p>
+              <p>
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quidem
+                modi facere quam soluta nisi. Dolorem nesciunt iste suscipit sed
+                vitae eum fuga ipsam ea! Doloremque minus totam ad natus esse!
+              </p>
+              <p class="metadata">Notes:</p>
+              <p>
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Earum
+                non animi debitis officia tempore quasi sapiente, nulla autem
+                quidem ex tempora velit veritatis aliquid incidunt repudiandae
+                hic iste similique porro!
+              </p>
+            </div>
+          </li>
+    `;
+      ul.appendChild(li);
+    });
+  };
 
   return {
     addNewCategoryForm,
@@ -255,42 +295,42 @@ export function UI() {
 //       });
 //   }
 
-//   renderTodoList(key) {
-//     const ul = document.getElementById("todoList");
-//     const array = Todocontroller.getArrayFromLocalStorage(key);
-//     console.log(array);
-//     // ul.innerHTML = "";
-//     // array.forEach((todo) => {
-//     //   const li = document.createElement("li");
-//     //   li.innerHTML = `
-//     //   <li>
-//     //         <div class="todoInfoDiv">
-//     //           <p>Title: <span>${todo.todo}</span></p>
-//     //           <p>Date&Time: <span>${todo.dateTime}</span></p>
-//     //           <p>Priority: <span>${priority}</span></p>
-//     //           <div>
-//     //             <button class="TodoBtns edit">edit</button>
-//     //             <button class="TodoBtns delete">Delete</button>
-//     //           </div>
-//     //         </div>
-//     //         <div>
-//     //           <p class="metadata">Description:</p>
-//     //           <p>
-//     //             Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quidem
-//     //             modi facere quam soluta nisi. Dolorem nesciunt iste suscipit sed
-//     //             vitae eum fuga ipsam ea! Doloremque minus totam ad natus esse!
-//     //           </p>
-//     //           <p class="metadata">Notes:</p>
-//     //           <p>
-//     //             Lorem ipsum dolor sit, amet consectetur adipisicing elit. Earum
-//     //             non animi debitis officia tempore quasi sapiente, nulla autem
-//     //             quidem ex tempora velit veritatis aliquid incidunt repudiandae
-//     //             hic iste similique porro!
-//     //           </p>
-//     //         </div>
-//     //       </li>
-//     // `;
-//     //   ul.appendChild(li);
-//     // });
-//   }
+// renderTodoList(key) {
+//   const ul = document.getElementById("todoList");
+//   const array = Todocontroller.getArrayFromLocalStorage(key);
+//   console.log(array);
+//   ul.innerHTML = "";
+//   array.forEach((todo) => {
+//     const li = document.createElement("li");
+//     li.innerHTML = `
+//     <li>
+//           <div class="todoInfoDiv">
+//             <p>Title: <span>${todo.todo}</span></p>
+//             <p>Date&Time: <span>${todo.dateTime}</span></p>
+//             <p>Priority: <span>${priority}</span></p>
+//             <div>
+//               <button class="TodoBtns edit">edit</button>
+//               <button class="TodoBtns delete">Delete</button>
+//             </div>
+//           </div>
+//           <div>
+//             <p class="metadata">Description:</p>
+//             <p>
+//               Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quidem
+//               modi facere quam soluta nisi. Dolorem nesciunt iste suscipit sed
+//               vitae eum fuga ipsam ea! Doloremque minus totam ad natus esse!
+//             </p>
+//             <p class="metadata">Notes:</p>
+//             <p>
+//               Lorem ipsum dolor sit, amet consectetur adipisicing elit. Earum
+//               non animi debitis officia tempore quasi sapiente, nulla autem
+//               quidem ex tempora velit veritatis aliquid incidunt repudiandae
+//               hic iste similique porro!
+//             </p>
+//           </div>
+//         </li>
+//   `;
+//     ul.appendChild(li);
+//   });
+// }
 // }

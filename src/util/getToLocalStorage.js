@@ -1,3 +1,3 @@
 export function getToLocalStorage(key) {
-  JSON.parse(localStorage.getItem(key));
+  return JSON.parse(localStorage.getItem(key));
 }
