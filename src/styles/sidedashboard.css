@@ -48,13 +48,16 @@
 .addCatergoriesBtn {
   height: 30px;
   width: 30px;
-  background-color: green;
+  background-color: rgba(0, 128, 0, 0.558);
   color: white;
   font-size: 20px;
-
   border-radius: 100%;
   cursor: pointer;
   border: none;
+}
+
+.addCatergoriesBtn:hover {
+  background-color: rgb(0, 128, 0);
 }
 
 .addCategoriesDiv label {
@@ -68,21 +71,27 @@
   width: 50px;
   border-radius: 2px;
   border: none;
-  background-color: red;
+  background-color: #ff5f5f;
   color: white;
   font-size: 12px;
   font-weight: bolder;
   cursor: pointer;
+}
+.submitCategoryBtn:hover {
+  background-color: #ff1f1f;
 }
 
 .trashbinBtn {
   height: 25px;
   width: 50px;
   overflow: hidden;
-  background-color: red;
+  background-color: #ff5f5f;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+}
+.trashbinBtn:hover {
+  background-color: #ff1f1f;
 }
 .trashbinBtn img {
   margin-top: 2px;

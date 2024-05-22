@@ -74,8 +74,11 @@
   border: none;
   cursor: pointer;
   font-size: 16px;
-  background-color: rgb(21, 255, 0);
+  background-color: rgb(23, 146, 12);
   color: white;
+}
+#todoSubmitBtn:hover {
+  background-color: rgb(21, 255, 0);
 }
 
 #todoList {
@@ -118,13 +121,19 @@
 }
 
 .edit {
-  background-color: rgba(42, 41, 41, 0.828);
+  background-color: rgba(42, 41, 41, 0.489);
   color: white;
+}
+.edit:hover {
+  background-color: rgba(42, 41, 41, 0.828);
 }
 
 .delete {
-  background-color: hsla(0, 100%, 50%, 0.683);
+  background-color: #ff5f5f;
   color: white;
+}
+.delete:hover {
+  background-color: #ff1f1f;
 }
 .metadata {
   font-size: 12px;
