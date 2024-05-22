@@ -84,7 +84,7 @@ export function UI() {
             </div>
 
             <div>
-              <label for="dateTime">Date & Time </label>
+              <label for="dateTime">Duedate </label>
               <input type="datetime-local" name="dateTime" id="dateTime" />
             </div>
 
@@ -118,6 +118,8 @@ export function UI() {
             todo: todoValue,
             dateTime: dateTime,
             priority: priority,
+            description: "",
+            notes: "",
           };
           const todoArray = lSControllers.getToLocalStorage(key);
           todoArray.push(todoItem);
@@ -139,26 +141,21 @@ export function UI() {
       <li>
             <div class="todoInfoDiv">
               <p>Title: <span>${todo.todo}</span></p>
-              <p>Date&Time: <span>${todo.dateTime}</span></p>
+              <p>Duedate: <span>${todo.dateTime}</span></p>
               <p>Priority: <span>${todo.priority}</span></p>
               <div>
-                <button class="TodoBtns edit">edit</button>
-                <button class="TodoBtns delete">Delete</button>
+                <button class="TodoBtn edit">edit</button>
+                <button class="TodoBtn delete">Delete</button>
               </div>
             </div>
             <div>
               <p class="metadata">Description:</p>
               <p>
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quidem
-                modi facere quam soluta nisi. Dolorem nesciunt iste suscipit sed
-                vitae eum fuga ipsam ea! Doloremque minus totam ad natus esse!
+                ${todo.description}
               </p>
               <p class="metadata">Notes:</p>
               <p>
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Earum
-                non animi debitis officia tempore quasi sapiente, nulla autem
-                quidem ex tempora velit veritatis aliquid incidunt repudiandae
-                hic iste similique porro!
+                ${todo.notes}
               </p>
             </div>
           </li>
@@ -167,8 +164,9 @@ export function UI() {
       const deleteBtn = li.querySelector(".delete");
 
       editBtn.addEventListener("click", () => {
-        console.log("edit working");
+        renderEditForm();
       });
+
       deleteBtn.addEventListener("click", () => {
         const category = lSControllers.getToLocalStorage(key);
         const updatedCategory = category.filter(
@@ -182,11 +180,59 @@ export function UI() {
     });
   };
 
+  const renderEditForm = () => {
+    const editInfoDiv = document.createElement("div");
+
+    editInfoDiv.classList.add("editInfoDiv");
+    editInfoDiv.innerHTML = `
+       <h1>Edit todo</h1>
+      <form class="editForm" action="submit-newInfo">
+        <div class="leftSide">
+          <div>
+            <label for="todo">todo</label>
+            <input type="text" name="todo" id="todo" />
+          </div>
+          <div>
+            <label for="duedate">duedate</label>
+            <input type="datetime-local" name="duedate" id="duedate" />
+          </div>
+          <div>
+            <label for="todo">priority</label>
+            <select name="priority" id="priority">
+              <option value="low">low</option>
+              <option value="high">high</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="rightSide">
+          <div>
+            <label for="description">description</label>
+            <textarea name="description" id="description"></textarea>
+          </div>
+          <div>
+            <label for="notes">notes</label>
+            <textarea name="notes" id="notes"></textarea>
+          </div>
+        </div>
+
+        <button type="button" class="exit">X</button>
+      </form>
+    `;
+    const exitBtn = editInfoDiv.querySelector(".exit");
+    exitBtn.addEventListener("click", () => {
+      editInfoDiv.remove();
+    });
+
+    document.body.appendChild(editInfoDiv);
+  };
+
   return {
     addNewCategoryForm,
     renderCategory,
     renderNav,
     renderTodoForm,
     renderTodoList,
+    renderEditForm,
   };
 }

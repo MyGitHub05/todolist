@@ -1,6 +1,7 @@
 import "./styles/main.css";
 import "./styles/sidedashboard.css";
 import "./styles/content.css";
+import "./styles/editForm.css";
 import "./images/userProfile.jpg";
 import "./images/menu.png";
 import "./images/trashbin.png";

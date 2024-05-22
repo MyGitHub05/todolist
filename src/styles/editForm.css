@@ -1,0 +1,81 @@
+.editInfoDiv {
+  z-index: 100;
+  border: 1px solid;
+  width: 90%;
+  height: 500px;
+  padding: 10px;
+  position: absolute;
+  background-color: white;
+  top: 10px;
+  left: 100px;
+  border-radius: 10px;
+}
+
+.editForm {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.leftSide,
+.rightSide {
+  display: flex;
+  height: 400px;
+  width: 100%;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.leftSide div,
+.rightSide div {
+  display: flex;
+  flex-direction: column;
+}
+
+.leftSide div label,
+.rightSide div label {
+  font-size: 25px;
+}
+
+.leftSide div input {
+  font-size: 16px;
+  padding: 10px;
+  outline: none;
+  border-radius: 2px;
+}
+
+.leftSide div select {
+  font-size: 16px;
+  padding: 10px;
+  outline: none;
+}
+
+.rightSide textarea {
+  outline: none;
+  font-size: 16px;
+  padding: 10px;
+  height: 130px;
+  border-radius: 2px;
+}
+
+.exit {
+  background-color: #ff5f5f;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+.exit:hover {
+  background-color: #ff1f1f;
+}
